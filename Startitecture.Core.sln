@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Startitecture.Resources", "Startitecture.Resources\Startitecture.Resources.csproj", "{A7607E4D-C83F-489C-B06E-3F05919EFFDC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Startitecture.Core", "Startitecture.Core\Startitecture.Core.csproj", "{8E7C97B4-8AB8-4F3D-97E5-FAF5791B0ECC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Startitecture.Core.Tests", "Startitecture.Core.Tests\Startitecture.Core.Tests.csproj", "{A46E4C18-A6F0-4E16-8632-2C3ECBE9FE4C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Logos", "Logos", "{2D49A0DF-EC95-439E-B7FE-4CCC8C0FCAC1}"
+	ProjectSection(SolutionItems) = preProject
+		Logos\Startitecture New Logo.png = Logos\Startitecture New Logo.png
+		Logos\startitecture_new_logo.ico = Logos\startitecture_new_logo.ico
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Certificates", "Certificates", "{D73A7776-EF2F-4D12-8193-587F53BF34C0}"
+	ProjectSection(SolutionItems) = preProject
+		Certificates\Startitecture-Public.snk = Certificates\Startitecture-Public.snk
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A7607E4D-C83F-489C-B06E-3F05919EFFDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7607E4D-C83F-489C-B06E-3F05919EFFDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7607E4D-C83F-489C-B06E-3F05919EFFDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7607E4D-C83F-489C-B06E-3F05919EFFDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E7C97B4-8AB8-4F3D-97E5-FAF5791B0ECC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E7C97B4-8AB8-4F3D-97E5-FAF5791B0ECC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E7C97B4-8AB8-4F3D-97E5-FAF5791B0ECC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E7C97B4-8AB8-4F3D-97E5-FAF5791B0ECC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A46E4C18-A6F0-4E16-8632-2C3ECBE9FE4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A46E4C18-A6F0-4E16-8632-2C3ECBE9FE4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A46E4C18-A6F0-4E16-8632-2C3ECBE9FE4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A46E4C18-A6F0-4E16-8632-2C3ECBE9FE4C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B0AAE3CD-BDB6-420A-A632-6027BA19D833}
+	EndGlobalSection
+EndGlobal
