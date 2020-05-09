@@ -42,3 +42,4 @@ steps:
     packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
     nuGetFeedType: 'internal'
     publishVstsFeed: '644f502f-3851-40c7-b691-0456e0bed428'
+    arguments: '--skip-duplicate'
