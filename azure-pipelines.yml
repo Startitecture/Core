@@ -52,5 +52,5 @@ steps:
 - task: CmdLine@2
   displayName: 'Push to GitHub'
   inputs:
-    script: 'git push https://github.com/Startitecture/Core.git'
+    script: 'git push https://github.com/Startitecture/Core.git HEAD:master'
     failOnStderr: true
