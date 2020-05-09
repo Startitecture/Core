@@ -40,11 +40,17 @@ steps:
     includesource: true
     versioningScheme: 'off'
 
-- task: DotNetCoreCLI@2
-  displayName: 'Publish NuGet Packages'
+#- task: DotNetCoreCLI@2
+#  displayName: 'Publish NuGet Packages'
+#  inputs:
+#    command: 'push'
+#    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+#    nuGetFeedType: 'internal'
+#    publishVstsFeed: '644f502f-3851-40c7-b691-0456e0bed428'
+#    arguments: '--skip-duplicate'
+
+- task: CmdLine@2
+  displayName: 'Push to GitHub'
   inputs:
-    command: 'push'
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
-    nuGetFeedType: 'internal'
-    publishVstsFeed: '644f502f-3851-40c7-b691-0456e0bed428'
-    arguments: '--skip-duplicate'
+    script: 'git push https://github.com/Startitecture/Core.git'
+    failOnStderr: true
