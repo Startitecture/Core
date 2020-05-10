@@ -52,14 +52,15 @@ steps:
     allowPackageConflicts: true
 
 - task: PublishBuildArtifacts@1
+  displayName: 'Publish NuGet Package Build Artifacts'
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'NuGet Packages'
     publishLocation: 'Container'
 
-- task: mirror-git-repository-vsts-task@1
+- task: CmdLine@2
+  displayName: 'Mirror to Github'
+  env:
+    GitPat: $(GithubPAT-Mirror)
   inputs:
-    sourceGitRepositoryUri: '$(Build.Repository.Uri)'
-    sourceGitRepositoryPersonalAccessToken: '$(StartitectureRepoPAT)'
-    destinationGitRepositoryUri: 'https://github.com/Startitecture/Core.git'
-    destinationGitRepositoryPersonalAccessToken: '$(GithubPAT-Mirror)'
+    script: 'git push --mirror https://%GitPat%@github.com/Startitecture/Core.git'
