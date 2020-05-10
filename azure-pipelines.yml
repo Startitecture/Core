@@ -57,6 +57,8 @@ steps:
     ArtifactName: 'NuGet Packages'
     publishLocation: 'Container'
 
-- task: gitmirror@0
+- task: mirror-git-repository-vsts-task@1
   inputs:
-    GitRepoUrl: 'https://$(GithubPAT-Mirror)@github.com/Startitecture/Core.git'
+    sourceGitRepositoryUri: '$(Build.Repository.Uri)'
+    destinationGitRepositoryUri: 'https://github.com/Startitecture/Core.git'
+    destinationGitRepositoryPersonalAccessToken: '$(GithubPAT-Mirror)'
