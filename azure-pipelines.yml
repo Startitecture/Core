@@ -56,3 +56,7 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'NuGet Packages'
     publishLocation: 'Container'
+
+- task: gitmirror@0
+  inputs:
+    GitRepoUrl: 'https://$(GithubPAT-Mirror)@github.com/Startitecture/Core.git'
