@@ -43,14 +43,13 @@ steps:
     includesource: true
     versioningScheme: 'off'
 
-#- task: DotNetCoreCLI@2
-#  displayName: 'Publish NuGet Packages'
-#  inputs:
-#    command: 'push'
-#    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
-#    nuGetFeedType: 'internal'
-#    publishVstsFeed: '644f502f-3851-40c7-b691-0456e0bed428'
-#    arguments: '--skip-duplicate'
+- task: NuGetCommand@2
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+    nuGetFeedType: 'internal'
+    publishVstsFeed: '644f502f-3851-40c7-b691-0456e0bed428'
+    allowPackageConflicts: true
 
 - task: PublishBuildArtifacts@1
   inputs:
