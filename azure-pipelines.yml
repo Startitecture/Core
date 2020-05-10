@@ -9,6 +9,9 @@ trigger:
 pool:
   vmImage: 'windows-latest'
 
+variables: 
+  - group: Git-Push
+
 steps:
 
 - task: DotNetCoreCLI@2
@@ -51,4 +54,4 @@ steps:
 
 - task: gitmirror@0
   inputs:
-    GitRepoUrl: 'https://$(git-pat)@github.com/Startitecture/Core.git'
+    GitRepoUrl: 'https://$(GithubPAT-Mirror)@github.com/Startitecture/Core.git'
