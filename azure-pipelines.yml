@@ -38,6 +38,7 @@ steps:
   inputs:
     command: 'pack'
     packagesToPack: '**/*.csproj;!**/*.Tests.csproj'
+    packDirectory: '$(Build.ArtifactStagingDirectory)/Packages'
     nobuild: true
     includesymbols: true
     includesource: true
@@ -54,7 +55,7 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: 'Publish NuGet Package Build Artifacts'
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/Packages'
     ArtifactName: 'NuGet Packages'
     publishLocation: 'Container'
 
