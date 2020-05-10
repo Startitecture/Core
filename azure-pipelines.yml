@@ -14,8 +14,6 @@ variables:
 
 steps:
 
-- script: echo $(GithubPAT-Mirror)
-
 - task: DotNetCoreCLI@2
   displayName: 'Restore NuGet Packages'
   inputs:
@@ -53,3 +51,9 @@ steps:
 #    nuGetFeedType: 'internal'
 #    publishVstsFeed: '644f502f-3851-40c7-b691-0456e0bed428'
 #    arguments: '--skip-duplicate'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'NuGet Packages'
+    publishLocation: 'Container'
