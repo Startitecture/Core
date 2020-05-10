@@ -14,6 +14,8 @@ variables:
 
 steps:
 
+- script: echo $(GithubPAT-Mirror)
+
 - task: DotNetCoreCLI@2
   displayName: 'Restore NuGet Packages'
   inputs:
