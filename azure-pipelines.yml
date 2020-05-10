@@ -63,4 +63,6 @@ steps:
   env:
     GitPat: $(GithubPAT-Mirror)
   inputs:
-    script: 'git push --mirror https://%GitPat%@github.com/Startitecture/Core.git'
+    script: |
+      git remote add --mirror=fetch mirror https://%GitPat%@github.com/Startitecture/Core.git
+      git push mirror --progress --prune +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*
