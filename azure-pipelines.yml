@@ -49,8 +49,6 @@ steps:
 #    publishVstsFeed: '644f502f-3851-40c7-b691-0456e0bed428'
 #    arguments: '--skip-duplicate'
 
-- task: CmdLine@2
-  displayName: 'Push to GitHub'
+- task: gitmirror@0
   inputs:
-    script: 'git push https://github.com/Startitecture/Core.git HEAD:master'
-    failOnStderr: true
+    GitRepoUrl: 'https://$(git-pat)@github.com/Startitecture/Core.git'
