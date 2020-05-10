@@ -60,5 +60,6 @@ steps:
 - task: mirror-git-repository-vsts-task@1
   inputs:
     sourceGitRepositoryUri: '$(Build.Repository.Uri)'
+    sourceGitRepositoryPersonalAccessToken: '$(StartitectureRepoPAT)'
     destinationGitRepositoryUri: 'https://github.com/Startitecture/Core.git'
     destinationGitRepositoryPersonalAccessToken: '$(GithubPAT-Mirror)'
