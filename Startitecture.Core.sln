@@ -20,6 +20,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Certificates", "Certificate
 		Certificates\Startitecture-Public.snk = Certificates\Startitecture-Public.snk
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{3394BC40-B7DA-45B1-AF67-D48EE7E87146}"
+	ProjectSection(SolutionItems) = preProject
+		docs\docfx.json = docs\docfx.json
+		docs\index.md = docs\index.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "articles", "articles", "{B8FE9DAC-09FC-4888-837C-9565235972AC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +49,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B8FE9DAC-09FC-4888-837C-9565235972AC} = {3394BC40-B7DA-45B1-AF67-D48EE7E87146}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B0AAE3CD-BDB6-420A-A632-6027BA19D833}

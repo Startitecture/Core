@@ -9,7 +9,7 @@
     <Company>Startitecture, LLC</Company>
     <NeutralLanguage>en-US</NeutralLanguage>
     <PackageTags>#framework #library</PackageTags>
-    <Version>1.0.0-beta3</Version>
+    <Version>1.0.0-beta4</Version>
     <Description>Core methods and functionality for Startitecture, LLC packages.</Description>
     <Copyright>© 2020, Startitecture, LLC</Copyright>
     <PackageProjectUrl>https://github.com/Startitecture/Core</PackageProjectUrl>
@@ -20,6 +20,7 @@
     <Authors>Startitecture, LLC</Authors>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Startitecture.Resources\Startitecture.Resources.csproj" />

@@ -18,8 +18,6 @@ namespace Startitecture.Core.Tests
     [TestClass]
     public class EvaluateTests
     {
-        #region Public Methods and Operators
-
         /// <summary>
         /// A test for Equals
         /// </summary>
@@ -96,7 +94,7 @@ namespace Startitecture.Core.Tests
         {
             var valueA = new FakeTestItem { TestString = "test", TestInt = 1, TestDateTime = DateTime.MinValue };
             var valueB = new FakeTestItem { TestString = "test", TestInt = 4, TestDateTime = DateTime.MinValue };
-            bool actual = Evaluate.Equals(valueA, valueB, o => o.TestString, o => o.TestDateTime);
+            var actual = Evaluate.Equals(valueA, valueB, o => o.TestString, o => o.TestDateTime);
             Assert.AreEqual(true, actual);
         }
 
@@ -116,7 +114,8 @@ namespace Startitecture.Core.Tests
             valueB.AddItem("Test2");
             valueB.AddItem("Test3");
 
-            Assert.IsTrue(Evaluate.RecursiveEquals(valueA, valueB));
+            var actual = Evaluate.RecursiveEquals(valueA, valueB);
+            Assert.IsTrue(actual);
         }
 
         /// <summary>
@@ -135,7 +134,8 @@ namespace Startitecture.Core.Tests
             valueB.AddItem("Test2");
             valueB.AddItem("Test3");
 
-            Assert.IsFalse(Evaluate.RecursiveEquals(valueA, valueB));
+            var actual = Evaluate.RecursiveEquals(valueA, valueB);
+            Assert.IsFalse(actual);
         }
 
         /// <summary>
@@ -154,7 +154,8 @@ namespace Startitecture.Core.Tests
             valueB.AddItem("Test2");
             valueB.AddItem("Test4");
 
-            Assert.IsFalse(Evaluate.RecursiveEquals(valueA, valueB));
+            var actual = Evaluate.RecursiveEquals(valueA, valueB);
+            Assert.IsFalse(actual);
         }
 
         /// <summary>
@@ -164,8 +165,8 @@ namespace Startitecture.Core.Tests
         public void GenerateHashCode_WithObjectEnumerable_MatchesExpected()
         {
             IEnumerable<object> values = Array.Empty<object>();
-            int expected = values.Aggregate(0, (i, o) => (i * 397) + Evaluate.GetHashCode(o));
-            int actual = Evaluate.GenerateHashCode(values);
+            var expected = values.Aggregate(0, (i, o) => (i * 397) + Evaluate.GetHashCode(o));
+            var actual = Evaluate.GenerateHashCode(values);
             Assert.AreEqual(expected, actual);
         }
 
@@ -176,8 +177,8 @@ namespace Startitecture.Core.Tests
         public void GenerateHashCode_WithParamsArray_MatchesExpected()
         {
             var values = new object[] { DateTime.Today, 2342, "asdsdfa2342345" };
-            int expected = values.Aggregate(0, (i, o) => (i * 397) + Evaluate.GetHashCode(o));
-            int actual = Evaluate.GenerateHashCode(values);
+            var expected = values.Aggregate(0, (i, o) => (i * 397) + Evaluate.GetHashCode(o));
+            var actual = Evaluate.GenerateHashCode(values);
             Assert.AreEqual(expected, actual);
         }
 
@@ -195,10 +196,10 @@ namespace Startitecture.Core.Tests
                                                                         dest => dest.TestString
                                                                     };
 
-            int expected = new object[] { item.TestDateTime, item.TestInt, item.TestString }.Aggregate(
+            var expected = new object[] { item.TestDateTime, item.TestInt, item.TestString }.Aggregate(
                 0, (i, o) => (i * 397) + Evaluate.GetHashCode(o));
 
-            int actual = Evaluate.GenerateHashCode(item, selectors);
+            var actual = Evaluate.GenerateHashCode(item, selectors);
             Assert.AreEqual(expected, actual);
         }
 
@@ -208,8 +209,8 @@ namespace Startitecture.Core.Tests
         [TestMethod]
         public void GetHashCode_NullValue_ReturnsZero()
         {
-            int expected = 0;
-            int actual = Evaluate.GetHashCode(default(FakeTestItem));
+            var expected = 0;
+            var actual = Evaluate.GetHashCode(default(FakeTestItem));
             Assert.AreEqual(expected, actual);
         }
 
@@ -220,8 +221,8 @@ namespace Startitecture.Core.Tests
         public void GetHashCode_TestObject_ReturnsHashCode()
         {
             var value = new FakeTestItem { TestInt = 23252, TestString = "SomeString" };
-            int expected = value.GetHashCode();
-            int actual = Evaluate.GetHashCode(value);
+            var expected = value.GetHashCode();
+            var actual = Evaluate.GetHashCode(value);
             Assert.AreEqual(expected, actual);
         }
 
@@ -231,7 +232,7 @@ namespace Startitecture.Core.Tests
         [TestMethod]
         public void IsDefaultValue_DefaultValueOfObjectType_ReturnsTrue()
         {
-            bool actual = Evaluate.IsDefaultValue(default(FakeTestItem));
+            var actual = Evaluate.IsDefaultValue(default(FakeTestItem));
             Assert.AreEqual(true, actual);
         }
 
@@ -241,7 +242,7 @@ namespace Startitecture.Core.Tests
         [TestMethod]
         public void IsDefaultValue_DefaultValueOfValueType_ReturnsTrue()
         {
-            bool actual = Evaluate.IsDefaultValue(default(int));
+            var actual = Evaluate.IsDefaultValue(default(int));
             Assert.AreEqual(true, actual);
         }
 
@@ -251,7 +252,7 @@ namespace Startitecture.Core.Tests
         [TestMethod]
         public void IsDefaultValue_NonDefaultValueOfObjectType_ReturnsFalse()
         {
-            bool actual = Evaluate.IsDefaultValue(new FakeTestItem { TestInt = 22, TestString = "asdlfkj" });
+            var actual = Evaluate.IsDefaultValue(new FakeTestItem { TestInt = 22, TestString = "asdlfkj" });
             Assert.AreEqual(false, actual);
         }
 
@@ -261,7 +262,7 @@ namespace Startitecture.Core.Tests
         [TestMethod]
         public void IsDefaultValue_NonDefaultValueOfValueType_ReturnsFalse()
         {
-            bool actual = Evaluate.IsDefaultValue(77);
+            var actual = Evaluate.IsDefaultValue(77);
             Assert.AreEqual(false, actual);
         }
 
@@ -271,7 +272,7 @@ namespace Startitecture.Core.Tests
         [TestMethod]
         public void IsDefaultValue_NullValueForNullableType_ReturnsTrue()
         {
-            bool actual = Evaluate.IsDefaultValue((int?)null);
+            var actual = Evaluate.IsDefaultValue((int?)null);
             Assert.AreEqual(true, actual);
         }
 
@@ -281,7 +282,7 @@ namespace Startitecture.Core.Tests
         [TestMethod]
         public void IsNull_DefaultValueOfValueType_ReturnsFalse()
         {
-            bool actual = Evaluate.IsNull(default(int));
+            var actual = Evaluate.IsNull(default(int));
             Assert.AreEqual(false, actual);
         }
 
@@ -291,7 +292,7 @@ namespace Startitecture.Core.Tests
         [TestMethod]
         public void IsNull_NullValue_ReturnsTrue()
         {
-            bool actual = Evaluate.IsDefaultValue(default(FakeTestItem));
+            var actual = Evaluate.IsDefaultValue(default(FakeTestItem));
             Assert.AreEqual(true, actual);
         }
 
@@ -302,7 +303,7 @@ namespace Startitecture.Core.Tests
         public void IsNull_SetValue_ReturnsFalse()
         {
             var value = new FakeTestItem { TestInt = 1, TestString = "blah" };
-            bool actual = Evaluate.IsDefaultValue(value);
+            var actual = Evaluate.IsDefaultValue(value);
             Assert.AreEqual(false, actual);
         }
 
@@ -312,7 +313,7 @@ namespace Startitecture.Core.Tests
         [TestMethod]
         public void IsNull_DefaultValueOfNullableType_ReturnsTrue()
         {
-            bool actual = Evaluate.IsNull((int?)null);
+            var actual = Evaluate.IsNull((int?)null);
             Assert.AreEqual(true, actual);
         }
 
@@ -322,7 +323,7 @@ namespace Startitecture.Core.Tests
         [TestMethod]
         public void IsSet_DefaultValueOfObjectType_ReturnsFalse()
         {
-            bool actual = Evaluate.IsSet(default(FakeTestItem));
+            var actual = Evaluate.IsSet(default(FakeTestItem));
             Assert.AreEqual(false, actual);
         }
 
@@ -332,7 +333,7 @@ namespace Startitecture.Core.Tests
         [TestMethod]
         public void IsSet_DefaultValueOfValueType_ReturnsTrue()
         {
-            bool actual = Evaluate.IsSet(default(int));
+            var actual = Evaluate.IsSet(default(int));
             Assert.AreEqual(true, actual);
         }
 
@@ -342,7 +343,7 @@ namespace Startitecture.Core.Tests
         [TestMethod]
         public void IsSet_NonDefaultValueOfObjectType_ReturnsTrue()
         {
-            bool actual = Evaluate.IsSet(new FakeTestItem { TestInt = 3, TestString = "Test" });
+            var actual = Evaluate.IsSet(new FakeTestItem { TestInt = 3, TestString = "Test" });
             Assert.AreEqual(true, actual);
         }
 
@@ -352,7 +353,7 @@ namespace Startitecture.Core.Tests
         [TestMethod]
         public void IsSet_NonDefaultValueOfValueType_ReturnsTrue()
         {
-            bool actual = Evaluate.IsSet(7);
+            var actual = Evaluate.IsSet(7);
             Assert.AreEqual(true, actual);
         }
 
@@ -362,11 +363,9 @@ namespace Startitecture.Core.Tests
         [TestMethod]
         public void IsSet_DefaultValueOfNullableType_ReturnsFalse()
         {
-            bool actual = Evaluate.IsSet((int?)null);
+            var actual = Evaluate.IsSet((int?)null);
             Assert.AreEqual(false, actual);
         }
-
-        #endregion
 
         /// <summary>
         /// The compare_ less than value type comparison_ returns less than zero.
@@ -453,18 +452,8 @@ namespace Startitecture.Core.Tests
         [TestMethod]
         public void Compare_LessThanObjectTypeComparisonFirstExpressionLessThan_ReturnsLessThanZero()
         {
-            var x = new ComparisonClass
-            {
-                Compared = 10,
-                AlsoCompared = "Compare1",
-                NotCompared = 239
-            };
-            var y = new ComparisonClass
-            {
-                Compared = 11,
-                AlsoCompared = "Compare1",
-                NotCompared = 94353
-            };
+            var x = new ComparisonClass { Compared = 10, AlsoCompared = "Compare1", NotCompared = 239 };
+            var y = new ComparisonClass { Compared = 11, AlsoCompared = "Compare1", NotCompared = 94353 };
             var actual = Evaluate.Compare(x, y, c => c.Compared, c => c.AlsoCompared);
             Assert.IsTrue(actual < 0);
         }
@@ -475,18 +464,8 @@ namespace Startitecture.Core.Tests
         [TestMethod]
         public void Compare_LessThanObjectTypeComparisonSecondExpressionLessThan_ReturnsLessThanZero()
         {
-            var x = new ComparisonClass
-            {
-                Compared = 10,
-                AlsoCompared = "Compare1",
-                NotCompared = 239
-            };
-            var y = new ComparisonClass
-            {
-                Compared = 10,
-                AlsoCompared = "Compare2",
-                NotCompared = 94353
-            };
+            var x = new ComparisonClass { Compared = 10, AlsoCompared = "Compare1", NotCompared = 239 };
+            var y = new ComparisonClass { Compared = 10, AlsoCompared = "Compare2", NotCompared = 94353 };
             var actual = Evaluate.Compare(x, y, c => c.Compared, c => c.AlsoCompared);
             Assert.IsTrue(actual < 0);
         }
@@ -497,18 +476,8 @@ namespace Startitecture.Core.Tests
         [TestMethod]
         public void Compare_LessThanObjectTypeComparisonSecondExpressionGreaterThan_ReturnsLessThanZero()
         {
-            var x = new ComparisonClass
-            {
-                Compared = 10,
-                AlsoCompared = "Compare2",
-                NotCompared = 239
-            };
-            var y = new ComparisonClass
-            {
-                Compared = 11,
-                AlsoCompared = "Compare1",
-                NotCompared = 94353
-            };
+            var x = new ComparisonClass { Compared = 10, AlsoCompared = "Compare2", NotCompared = 239 };
+            var y = new ComparisonClass { Compared = 11, AlsoCompared = "Compare1", NotCompared = 94353 };
             var actual = Evaluate.Compare(x, y, c => c.Compared, c => c.AlsoCompared);
             Assert.IsTrue(actual < 0);
         }
@@ -519,18 +488,8 @@ namespace Startitecture.Core.Tests
         [TestMethod]
         public void Compare_GreaterThanObjectTypeComparisonFirstExpressionGreaterThan_ReturnsGreaterThanZero()
         {
-            var x = new ComparisonClass
-            {
-                Compared = 12,
-                AlsoCompared = "Compare1",
-                NotCompared = 239
-            };
-            var y = new ComparisonClass
-            {
-                Compared = 11,
-                AlsoCompared = "Compare1",
-                NotCompared = 94353
-            };
+            var x = new ComparisonClass { Compared = 12, AlsoCompared = "Compare1", NotCompared = 239 };
+            var y = new ComparisonClass { Compared = 11, AlsoCompared = "Compare1", NotCompared = 94353 };
             var actual = Evaluate.Compare(x, y, c => c.Compared, c => c.AlsoCompared);
             Assert.IsTrue(actual > 0);
         }
@@ -541,18 +500,8 @@ namespace Startitecture.Core.Tests
         [TestMethod]
         public void Compare_GreaterThanObjectTypeComparisonSecondExpressionGreaterThan_ReturnsGreaterThanZero()
         {
-            var x = new ComparisonClass
-            {
-                Compared = 11,
-                AlsoCompared = "Compare2",
-                NotCompared = 239
-            };
-            var y = new ComparisonClass
-            {
-                Compared = 11,
-                AlsoCompared = "Compare1",
-                NotCompared = 94353
-            };
+            var x = new ComparisonClass { Compared = 11, AlsoCompared = "Compare2", NotCompared = 239 };
+            var y = new ComparisonClass { Compared = 11, AlsoCompared = "Compare1", NotCompared = 94353 };
             var actual = Evaluate.Compare(x, y, c => c.Compared, c => c.AlsoCompared);
             Assert.IsTrue(actual > 0);
         }
@@ -563,18 +512,8 @@ namespace Startitecture.Core.Tests
         [TestMethod]
         public void Compare_GreaterThanObjectTypeComparisonSecondExpressionLessThan_ReturnsGreaterThanZero()
         {
-            var x = new ComparisonClass
-            {
-                Compared = 12,
-                AlsoCompared = "Compare1",
-                NotCompared = 239
-            };
-            var y = new ComparisonClass
-            {
-                Compared = 11,
-                AlsoCompared = "Compare2",
-                NotCompared = 94353
-            };
+            var x = new ComparisonClass { Compared = 12, AlsoCompared = "Compare1", NotCompared = 239 };
+            var y = new ComparisonClass { Compared = 11, AlsoCompared = "Compare2", NotCompared = 94353 };
             var actual = Evaluate.Compare(x, y, c => c.Compared, c => c.AlsoCompared);
             Assert.IsTrue(actual > 0);
         }
@@ -585,18 +524,8 @@ namespace Startitecture.Core.Tests
         [TestMethod]
         public void Compare_EqualObjectTypeComparison_ReturnsZero()
         {
-            var x = new ComparisonClass
-            {
-                Compared = 11,
-                AlsoCompared = "Compare1",
-                NotCompared = 239
-            };
-            var y = new ComparisonClass
-            {
-                Compared = 11,
-                AlsoCompared = "Compare1",
-                NotCompared = 239
-            };
+            var x = new ComparisonClass { Compared = 11, AlsoCompared = "Compare1", NotCompared = 239 };
+            var y = new ComparisonClass { Compared = 11, AlsoCompared = "Compare1", NotCompared = 239 };
             var actual = Evaluate.Compare(x, y, c => c.Compared, c => c.AlsoCompared);
             Assert.IsTrue(actual == 0);
         }
@@ -607,18 +536,8 @@ namespace Startitecture.Core.Tests
         [TestMethod]
         public void Compare_EqualObjectTypeComparisonExceptNonComparedProperty_ReturnsZero()
         {
-            var x = new ComparisonClass
-            {
-                Compared = 11,
-                AlsoCompared = "Compare1",
-                NotCompared = 239
-            };
-            var y = new ComparisonClass
-            {
-                Compared = 11,
-                AlsoCompared = "Compare1",
-                NotCompared = 432532
-            };
+            var x = new ComparisonClass { Compared = 11, AlsoCompared = "Compare1", NotCompared = 239 };
+            var y = new ComparisonClass { Compared = 11, AlsoCompared = "Compare1", NotCompared = 432532 };
             var actual = Evaluate.Compare(x, y, c => c.Compared, c => c.AlsoCompared);
             Assert.IsTrue(actual == 0);
         }
