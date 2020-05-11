@@ -9,6 +9,9 @@ trigger:
 pool:
   vmImage: 'windows-latest'
 
+variables: 
+  - group: Git-Push
+
 steps:
 
 - task: DotNetCoreCLI@2
@@ -35,22 +38,33 @@ steps:
   inputs:
     command: 'pack'
     packagesToPack: '**/*.csproj;!**/*.Tests.csproj'
+    packDirectory: '$(Build.ArtifactStagingDirectory)/Packages'
     nobuild: true
     includesymbols: true
     includesource: true
     versioningScheme: 'off'
 
-#- task: DotNetCoreCLI@2
-#  displayName: 'Publish NuGet Packages'
-#  inputs:
-#    command: 'push'
-#    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
-#    nuGetFeedType: 'internal'
-#    publishVstsFeed: '644f502f-3851-40c7-b691-0456e0bed428'
-#    arguments: '--skip-duplicate'
+- task: NuGetCommand@2
+  displayName: 'Push NuGet Packages Internal'
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+    nuGetFeedType: 'internal'
+    publishVstsFeed: '644f502f-3851-40c7-b691-0456e0bed428'
+    allowPackageConflicts: true
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish NuGet Package Build Artifacts'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/Packages'
+    ArtifactName: 'NuGet Packages'
+    publishLocation: 'Container'
 
 - task: CmdLine@2
-  displayName: 'Push to GitHub'
+  displayName: 'Mirror to Github'
+  env:
+    GitPat: $(GithubPAT-Mirror)
   inputs:
-    script: 'git push https://github.com/Startitecture/Core.git HEAD:master'
-    failOnStderr: true
+    script: |
+      git remote add --mirror=fetch mirror https://%GitPat%@github.com/Startitecture/Core.git
+      git push mirror --progress --prune +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*
