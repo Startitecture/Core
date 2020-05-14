@@ -60,6 +60,11 @@ steps:
     ArtifactName: 'NuGet Packages'
     publishLocation: 'Container'
 
+- task: DocFxTask@0
+  displayName: 'Create DocFx documentation'
+  inputs:
+    solution: 'docs\docfx.json'
+
 - task: CmdLine@2
   displayName: 'Mirror to Github'
   env:
@@ -68,3 +73,4 @@ steps:
     script: |
       git remote add --mirror=fetch mirror https://%GitPat%@github.com/Startitecture/Core.git
       git push mirror --progress --prune +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*
+
