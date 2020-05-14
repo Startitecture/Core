@@ -19,6 +19,7 @@
     <ApplicationIcon>startitecture_new_logo.ico</ApplicationIcon>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
   </PropertyGroup>
   <ItemGroup>
     <Compile Update="ErrorMessages.Designer.cs">
