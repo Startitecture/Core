@@ -65,6 +65,12 @@ steps:
   inputs:
     solution: 'docs\docfx.json'
 
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(System.DefaultWorkingDirectory)/docs/_site'
+    artifact: 'DocFx Site'
+    publishLocation: 'pipeline'
+
 - task: CmdLine@2
   displayName: 'Mirror to Github'
   env:
