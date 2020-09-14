@@ -14,8 +14,8 @@
     <RepositoryUrl></RepositoryUrl>
     <RepositoryType></RepositoryType>
     <PackageIcon>Startitecture New Logo.png</PackageIcon>
-    <PackageTags>#framework #library</PackageTags>
-    <Version>1.0.0-beta4</Version>
+    <PackageTags>framework library core startitecture</PackageTags>
+    <Version>1.0.0-beta5</Version>
     <ApplicationIcon>startitecture_new_logo.ico</ApplicationIcon>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>

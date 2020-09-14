@@ -8,8 +8,8 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Company>Startitecture, LLC</Company>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <PackageTags>#framework #library</PackageTags>
-    <Version>1.0.0-beta4</Version>
+    <PackageTags>framework library core startitecture</PackageTags>
+    <Version>1.0.0-beta5</Version>
     <Description>Core methods and functionality for Startitecture, LLC packages.</Description>
     <Copyright>© 2020, Startitecture, LLC</Copyright>
     <PackageProjectUrl>https://github.com/Startitecture/Core</PackageProjectUrl>
