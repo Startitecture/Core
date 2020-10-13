@@ -322,6 +322,7 @@ namespace Startitecture.Core
         /// <returns>
         /// A <typeparamref name="TValue"/> instance, either from the cache or from the retrieval function <paramref name="getValue"/>.
         /// </returns>
+        [Obsolete("Use lazy initialization and ObjectCache.AddOrGetExisting")]
         public static TValue GetOrLazyAddExisting<TKey, TValue>(
             this ObjectCache cache,
             object synchronizationLock,
@@ -412,6 +413,7 @@ namespace Startitecture.Core
         /// <returns>
         /// A <typeparamref name="TValue"/> instance, either from the cache or from the retrieval function <paramref name="getValue"/>.
         /// </returns>
+        [Obsolete("Use lazy initialization and ObjectCache.AddOrGetExisting")]
         public static CacheResult<TValue> GetOrLazyAddExistingWithResult<TKey, TValue>(
             this ObjectCache cache,
             object synchronizationLock,

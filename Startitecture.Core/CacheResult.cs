@@ -9,12 +9,15 @@
 
 namespace Startitecture.Core
 {
+    using System;
+
     /// <summary>
     /// Contains the result of a cache query.
     /// </summary>
     /// <typeparam name="TItem">
     /// The type of item being selected by the query.
     /// </typeparam>
+    [Obsolete("Use .NET MemoryCache/ObjectCache")]
     public class CacheResult<TItem>
     {
         #region Constructors and Destructors
@@ -45,17 +48,17 @@ namespace Startitecture.Core
         /// <summary>
         /// Gets a value indicating whether hit.
         /// </summary>
-        public bool Hit { get; private set; }
+        public bool Hit { get; }
 
         /// <summary>
         /// Gets the item.
         /// </summary>
-        public TItem Item { get; private set; }
+        public TItem Item { get; }
 
         /// <summary>
         /// Gets the key.
         /// </summary>
-        public string Key { get; private set; }
+        public string Key { get; }
 
         #endregion
     }

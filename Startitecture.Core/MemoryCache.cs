@@ -23,6 +23,7 @@ namespace Startitecture.Core
     /// <typeparam name="TValue">
     /// The type of value stored in the cache.
     /// </typeparam>
+    [Obsolete("Use .NET Memory Cache")]
     public sealed class MemoryCache<TKey, TValue> : IDisposable
     {
         #region Fields
