@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="OperationException.cs" company="Startitecture">
-//   Copyright 2017 Startitecture. All rights reserved.
+//   Copyright (c) Startitecture. All rights reserved.
 // </copyright>
 // <summary>
 //   Represents an error that is the direct result of an operation failure.
@@ -16,7 +16,7 @@ namespace Startitecture.Core
     /// Represents an error that is the direct result of an operation failure.
     /// </summary>
     [Serializable]
-    public sealed class OperationException : DomainException
+    public class OperationException : DomainException
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationException"/> class.
@@ -29,7 +29,9 @@ namespace Startitecture.Core
         /// Initializes a new instance of the <see cref="OperationException"/> class with a message describing 
         /// the exception.
         /// </summary>
-        /// <param name="message">The message describing the exception.</param>
+        /// <param name="message">
+        /// The message describing the exception.
+        /// </param>
         public OperationException(string message)
             : base(message)
         {
@@ -39,8 +41,12 @@ namespace Startitecture.Core
         /// Initializes a new instance of the <see cref="OperationException"/> class with a message describing 
         /// the exception and the underlying exception that caused the <see cref="OperationException"/>.
         /// </summary>
-        /// <param name="message">The message describing the exception.</param>
-        /// <param name="innerException">The underlying exception that caused the SystemException.</param>
+        /// <param name="message">
+        /// The message describing the exception.
+        /// </param>
+        /// <param name="innerException">
+        /// The underlying exception that caused the exception.
+        /// </param>
         public OperationException(string message, Exception innerException)
             : base(message, innerException)
         {
@@ -76,9 +82,15 @@ namespace Startitecture.Core
         /// associated with the exception, a message describing the exception and the underlying exception that caused 
         /// the <see cref="OperationException"/>.
         /// </summary>
-        /// <param name="targetEntity">The business object associated with the exception.</param>
-        /// <param name="message">The message describing the exception.</param>
-        /// <param name="innerException">The underlying exception that caused the BusinessException.</param>
+        /// <param name="targetEntity">
+        /// The business object associated with the exception.
+        /// </param>
+        /// <param name="message">
+        /// The message describing the exception.
+        /// </param>
+        /// <param name="innerException">
+        /// The underlying exception that caused the BusinessException.
+        /// </param>
         public OperationException(object targetEntity, string message, Exception innerException)
             : base(message, innerException)
         {
@@ -89,14 +101,21 @@ namespace Startitecture.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationException"/> class.
         /// </summary>
-        /// <param name="info">The System.Runtime.Serialization.SerializationInfo that holds the serialized object 
-        /// data about the exception being thrown.</param>
-        /// <param name="context">The System.Runtime.Serialization.StreamingContext that contains contextual 
-        /// information about the source or destination.</param>
-        /// <exception cref="System.ArgumentNullException">The info parameter is null.</exception>
-        /// <exception cref="System.Runtime.Serialization.SerializationException">The class name is null or 
-        /// System.Exception.HResult is zero (0).</exception>
-        private OperationException(
+        /// <param name="info">
+        /// The System.Runtime.Serialization.SerializationInfo that holds the serialized object 
+        /// data about the exception being thrown.
+        /// </param>
+        /// <param name="context">
+        /// The System.Runtime.Serialization.StreamingContext that contains contextual 
+        /// information about the source or destination.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        /// The info parameter is null.
+        /// </exception>
+        /// <exception cref="System.Runtime.Serialization.SerializationException">
+        /// The class name is null or System.Exception.HResult is zero (0).
+        /// </exception>
+        protected OperationException(
             System.Runtime.Serialization.SerializationInfo info,
             System.Runtime.Serialization.StreamingContext context)
             : base(info, context)
@@ -111,11 +130,17 @@ namespace Startitecture.Core
         /// <summary>
         /// Adds directive information to the exception.
         /// </summary>
-        /// <param name="info">The System.Runtime.Serialization.SerializationInfo that holds the serialized object 
-        /// data about the exception being thrown.</param>
-        /// <param name="context">The System.Runtime.Serialization.StreamingContext that contains contextual 
-        /// information about the source or destination.</param>
-        /// <exception cref="System.ArgumentNullException">The info parameter is null.</exception>
+        /// <param name="info">
+        /// The System.Runtime.Serialization.SerializationInfo that holds the serialized object 
+        /// data about the exception being thrown.
+        /// </param>
+        /// <param name="context">
+        /// The System.Runtime.Serialization.StreamingContext that contains contextual 
+        /// information about the source or destination.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        /// The info parameter is null.
+        /// </exception>
         [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
         public override void GetObjectData(
             System.Runtime.Serialization.SerializationInfo info, 
