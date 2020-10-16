@@ -1,10 +1,7 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="BusinessException.cs" company="Startitecture">
-//   Copyright 2017 Startitecture. All rights reserved.
+//   Copyright (c) Startitecture. All rights reserved.
 // </copyright>
-// <summary>
-//   Represents a validation error in business logic or rules.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace Startitecture.Core
@@ -26,8 +23,6 @@ namespace Startitecture.Core
     [Serializable]
     public sealed class BusinessException : Exception
     {
-        #region Constants
-
         /// <summary>
         /// The entity error key format.
         /// </summary>
@@ -43,18 +38,10 @@ namespace Startitecture.Core
         /// </summary>
         private const string TargetEntityKey = "Target Entity";
 
-        #endregion
-
-        #region Fields
-
         /// <summary>
         /// A collection of error messages associated with the entity.
         /// </summary>
         private readonly StringCollection entityErrors = new StringCollection();
-
-        #endregion
-
-        #region Constructors and Destructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BusinessException" /> class.
@@ -231,10 +218,10 @@ namespace Startitecture.Core
         /// The System.Runtime.Serialization.StreamingContext that contains contextual
         /// information about the source or destination.
         /// </param>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         /// The info parameter is null.
         /// </exception>
-        /// <exception cref="System.Runtime.Serialization.SerializationException">
+        /// <exception cref="SerializationException">
         /// The class name is null or
         /// System.Exception.HResult is zero (0).
         /// </exception>
@@ -242,10 +229,6 @@ namespace Startitecture.Core
             : base(info, context)
         {
         }
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>
         /// Gets a collection of errors related to the business entity.
@@ -256,10 +239,6 @@ namespace Startitecture.Core
         /// Gets the business object associated with the exception.
         /// </summary>
         public object TargetEntity { get; private set; }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>
         /// Adds directive information to the exception.
@@ -272,7 +251,7 @@ namespace Startitecture.Core
         /// The System.Runtime.Serialization.StreamingContext that contains contextual
         /// information about the source or destination.
         /// </param>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         /// The info parameter is null.
         /// </exception>
         [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
@@ -283,10 +262,6 @@ namespace Startitecture.Core
             info.AddValue("TargetEntity", Convert.ToString(this.TargetEntity, CultureInfo.CurrentCulture));
             info.AddValue("EntityErrors", this.EntityErrors);
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>
         /// Creates a message based on the target item and entity errors.
@@ -309,7 +284,5 @@ namespace Startitecture.Core
                        ? string.Format(CultureInfo.CurrentCulture, ValidationMessages.EntityValidationFailedMultiple, errors.Count, errors.First())
                        : string.Format(CultureInfo.CurrentCulture, ValidationMessages.EntityValidationFailedSingle, errors.FirstOrDefault() ?? NoErrorsMessage);
         }
-
-        #endregion
     }
 }

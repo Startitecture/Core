@@ -1,10 +1,7 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="ExtensionMethodsTests.cs" company="Startitecture">
-//   Copyright 2017 Startitecture. All rights reserved.
+//   Copyright (c) Startitecture. All rights reserved.
 // </copyright>
-// <summary>
-//   The extension methods tests.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace Startitecture.Core.Tests
@@ -14,8 +11,6 @@ namespace Startitecture.Core.Tests
     using System.Globalization;
     using System.Linq;
     using System.Linq.Expressions;
-    using System.Runtime.Caching;
-
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     using Startitecture.Core;
@@ -64,7 +59,7 @@ namespace Startitecture.Core.Tests
         }
 
         /// <summary>
-        /// A test for GetPropertyValue
+        /// A test for GetPropertyValue.
         /// </summary>
         [TestMethod]
         public void GetPropertyValue_ExistingProperty_MatchesExpected()
@@ -77,7 +72,7 @@ namespace Startitecture.Core.Tests
         }
 
         /// <summary>
-        /// A test for GetDifferences
+        /// A test for GetDifferences.
         /// </summary>
         [TestMethod]
         public void GetDifferences_AllValuesDifferentWithSpecifiedProperties_MatchesExpected()
@@ -96,7 +91,7 @@ namespace Startitecture.Core.Tests
         }
 
         /// <summary>
-        /// A test for GetDifferences
+        /// A test for GetDifferences.
         /// </summary>
         [TestMethod]
         public void GetDifferences_AllValuesDifferent_MatchesExpected()
@@ -115,7 +110,7 @@ namespace Startitecture.Core.Tests
         }
 
         /// <summary>
-        /// A test for GetDifferences
+        /// A test for GetDifferences.
         /// </summary>
         [TestMethod]
         public void GetDifferences_AllValuesEqual_ReturnsEmpty()
@@ -182,7 +177,7 @@ namespace Startitecture.Core.Tests
             var actual = expression.GetPropertyName();
             Assert.AreEqual(nameof(FakeTestItem.TestInt), actual);
         }
-        
+
         /// <summary>
         /// The get member test.
         /// </summary>
@@ -193,287 +188,6 @@ namespace Startitecture.Core.Tests
             var fakeTestItem = new FakeTestItem { TestInt = 32 };
             var actual = fakeTestItem.GetPropertyValue(expression.GetPropertyName());
             Assert.AreEqual(32, actual);
-        }
-
-        /// <summary>
-        /// The get or lazy add existing cache miss returns factory output.
-        /// </summary>
-        [TestMethod]
-        public void GetOrLazyAddExisting_CacheMiss_ReturnsFactoryOutput()
-        {
-            var cacheLock = new object();
-            var cacheItemPolicy = new CacheItemPolicy
-                                      {
-                                          AbsoluteExpiration = DateTimeOffset.Now.AddHours(1)
-                                      };
-
-            var testDateTime = DateTime.Now;
-
-            using (var cache = new MemoryCache("myCache"))
-            {
-                var testInt = 20;
-                var item = new FakeTestItem { TestInt = testInt, TestString = "TestString" };
-                var actual = cache.GetOrLazyAddExisting(
-                    cacheLock,
-                    $"{typeof(FakeTestItem)}:{item.TestInt}",
-                    item.TestInt,
-                    i => new FakeTestItem
-                             {
-                                 TestInt = i,
-                                 TestDateTime = testDateTime,
-                                 TestString = "FactoryItem"
-                             },
-                    cacheItemPolicy);
-
-                var expected = new FakeTestItem
-                                   {
-                                       TestInt = testInt,
-                                       TestDateTime = testDateTime,
-                                       TestString = "FactoryItem"
-                                   };
-
-                Assert.AreEqual(expected, actual);
-            }
-        }
-
-        /// <summary>
-        /// The get or lazy add existing cache hit returns cached object.
-        /// </summary>
-        [TestMethod]
-        public void GetOrLazyAddExisting_CacheHit_ReturnsCachedObject()
-        {
-            FakeTestItem FakeTestItemGenerator(int i, DateTime dateTime, Random random1)
-            {
-                return new FakeTestItem
-                           {
-                               TestInt = i,
-                               TestDateTime = dateTime,
-                               TestString = $"FactoryItem-{random1.NextDouble()}"
-                           };
-            }
-
-            var random = new Random();
-            var cacheLock = new object();
-            var cacheItemPolicy = new CacheItemPolicy
-                                      {
-                                          AbsoluteExpiration = DateTimeOffset.Now.AddHours(1)
-                                      };
-
-            var testDateTime = DateTime.Now;
-
-            using (var cache = new MemoryCache("myCache"))
-            {
-                var testInt = 20;
-                var item = new FakeTestItem { TestInt = testInt, TestString = "TestString" };
-                var cacheKey = $"{typeof(FakeTestItem)}:{item.TestInt}";
-
-                var expected = cache.GetOrLazyAddExisting(
-                    cacheLock,
-                    cacheKey,
-                    item.TestInt,
-                    i => FakeTestItemGenerator(i, testDateTime, random),
-                    cacheItemPolicy);
-
-                var actual = cache.GetOrLazyAddExisting(
-                    cacheLock,
-                    cacheKey,
-                    item.TestInt,
-                    i => FakeTestItemGenerator(i, testDateTime, random),
-                    cacheItemPolicy);
-
-                Assert.AreSame(expected, actual);
-            }
-        }
-
-        /// <summary>
-        /// The get or lazy add existing cache expired returns factory object.
-        /// </summary>
-        [TestMethod]
-        public void GetOrLazyAddExisting_CacheExpired_ReturnsFactoryObject()
-        {
-            FakeTestItem FakeTestItemGenerator(int i, DateTime dateTime, Random random1)
-            {
-                return new FakeTestItem
-                           {
-                               TestInt = i,
-                               TestDateTime = dateTime,
-                               TestString = $"FactoryItem-{random1.NextDouble()}"
-                           };
-            }
-
-            var random = new Random();
-            var cacheLock = new object();
-            var cacheItemPolicy = new CacheItemPolicy
-                                      {
-                                          AbsoluteExpiration = DateTimeOffset.Now.AddHours(-1) // Should immediately expire the object
-                                      };
-
-            var testDateTime = DateTime.Now;
-
-            using (var cache = new MemoryCache("myCache"))
-            {
-                var testInt = 20;
-                var item = new FakeTestItem { TestInt = testInt, TestString = "TestString" };
-                var cacheKey = $"{typeof(FakeTestItem)}:{item.TestInt}";
-
-                var expected = cache.GetOrLazyAddExisting(
-                    cacheLock,
-                    cacheKey,
-                    item.TestInt,
-                    i => FakeTestItemGenerator(i, testDateTime, random),
-                    cacheItemPolicy);
-
-                var actual = cache.GetOrLazyAddExisting(
-                    cacheLock,
-                    cacheKey,
-                    item.TestInt,
-                    i => FakeTestItemGenerator(i, testDateTime, random),
-                    cacheItemPolicy);
-
-                Assert.AreNotSame(expected, actual);
-            }
-        }
-
-        /// <summary>
-        /// The get or lazy add existing with result cache miss returns factory output.
-        /// </summary>
-        [TestMethod]
-        public void GetOrLazyAddExistingWithResult_CacheMiss_ReturnsFactoryOutput()
-        {
-            var cacheLock = new object();
-            var cacheItemPolicy = new CacheItemPolicy
-            {
-                AbsoluteExpiration = DateTimeOffset.Now.AddHours(1)
-            };
-
-            var testDateTime = DateTime.Now;
-
-            using (var cache = new MemoryCache("myCache"))
-            {
-                var testInt = 20;
-                var item = new FakeTestItem { TestInt = testInt, TestString = "TestString" };
-                var actual = cache.GetOrLazyAddExistingWithResult(
-                    cacheLock,
-                    $"{typeof(FakeTestItem)}:{item.TestInt}",
-                    item.TestInt,
-                    i => new FakeTestItem
-                    {
-                        TestInt = i,
-                        TestDateTime = testDateTime,
-                        TestString = "FactoryItem"
-                    },
-                    cacheItemPolicy);
-
-                var expected = new FakeTestItem
-                {
-                    TestInt = testInt,
-                    TestDateTime = testDateTime,
-                    TestString = "FactoryItem"
-                };
-
-                Assert.IsFalse(actual.Hit);
-                Assert.AreEqual(expected, actual.Item);
-            }
-        }
-
-        /// <summary>
-        /// The get or lazy add existing with result cache hit returns cached object.
-        /// </summary>
-        [TestMethod]
-        public void GetOrLazyAddExistingWithResult_CacheHit_ReturnsCachedObject()
-        {
-            FakeTestItem FakeTestItemGenerator(int i, DateTime dateTime, Random random1)
-            {
-                return new FakeTestItem
-                {
-                    TestInt = i,
-                    TestDateTime = dateTime,
-                    TestString = $"FactoryItem-{random1.NextDouble()}"
-                };
-            }
-
-            var random = new Random();
-            var cacheLock = new object();
-            var cacheItemPolicy = new CacheItemPolicy
-            {
-                AbsoluteExpiration = DateTimeOffset.Now.AddHours(1)
-            };
-
-            var testDateTime = DateTime.Now;
-
-            using (var cache = new MemoryCache("myCache"))
-            {
-                var testInt = 20;
-                var item = new FakeTestItem { TestInt = testInt, TestString = "TestString" };
-                var cacheKey = $"{typeof(FakeTestItem)}:{item.TestInt}";
-
-                var expected = cache.GetOrLazyAddExistingWithResult(
-                    cacheLock,
-                    cacheKey,
-                    item.TestInt,
-                    i => FakeTestItemGenerator(i, testDateTime, random),
-                    cacheItemPolicy);
-
-                var actual = cache.GetOrLazyAddExistingWithResult(
-                    cacheLock,
-                    cacheKey,
-                    item.TestInt,
-                    i => FakeTestItemGenerator(i, testDateTime, random),
-                    cacheItemPolicy);
-
-                Assert.IsTrue(actual.Hit);
-                Assert.AreSame(expected.Item, actual.Item);
-            }
-        }
-
-        /// <summary>
-        /// The get or lazy add existing with result cache expired returns factory object.
-        /// </summary>
-        [TestMethod]
-        public void GetOrLazyAddExistingWithResult_CacheExpired_ReturnsFactoryObject()
-        {
-            FakeTestItem FakeTestItemGenerator(int i, DateTime dateTime, Random random1)
-            {
-                return new FakeTestItem
-                {
-                    TestInt = i,
-                    TestDateTime = dateTime,
-                    TestString = $"FactoryItem-{random1.NextDouble()}"
-                };
-            }
-
-            var random = new Random();
-            var cacheLock = new object();
-            var cacheItemPolicy = new CacheItemPolicy
-            {
-                AbsoluteExpiration = DateTimeOffset.Now.AddHours(-1) // Should immediately expire the object
-            };
-
-            var testDateTime = DateTime.Now;
-
-            using (var cache = new MemoryCache("myCache"))
-            {
-                var testInt = 20;
-                var item = new FakeTestItem { TestInt = testInt, TestString = "TestString" };
-                var cacheKey = $"{typeof(FakeTestItem)}:{item.TestInt}";
-
-                var expected = cache.GetOrLazyAddExistingWithResult(
-                    cacheLock,
-                    cacheKey,
-                    item.TestInt,
-                    i => FakeTestItemGenerator(i, testDateTime, random),
-                    cacheItemPolicy);
-
-                var actual = cache.GetOrLazyAddExistingWithResult(
-                    cacheLock,
-                    cacheKey,
-                    item.TestInt,
-                    i => FakeTestItemGenerator(i, testDateTime, random),
-                    cacheItemPolicy);
-
-                Assert.IsFalse(actual.Hit);
-                Assert.AreNotSame(expected.Item, actual.Item);
-            }
         }
     }
 }

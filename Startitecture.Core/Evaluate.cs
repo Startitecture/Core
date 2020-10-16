@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Evaluate.cs" company="Startitecture">
-//   Copyright 2017 Startitecture. All rights reserved.
+//   Copyright (c) Startitecture. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 namespace Startitecture.Core
@@ -18,8 +18,6 @@ namespace Startitecture.Core
     /// </summary>
     public static class Evaluate
     {
-        #region Null and Default Values
-
         /// <summary>
         /// Determines whether the specified value is null.
         /// </summary>
@@ -72,10 +70,6 @@ namespace Startitecture.Core
             return EqualityComparer<T>.Default.Equals(value, default);
         }
 
-        #endregion
-
-        #region Equality and Comparison
-
         /// <summary>
         /// Tests the equality of two items, using recursion if non-string enumerable properties are encountered.
         /// </summary>
@@ -95,9 +89,15 @@ namespace Startitecture.Core
                 // Don't allow strings to get evaluated as collections.
                 case string stringValueA when itemB is string stringValueB && Equals(stringValueA, stringValueB) == false:
                 // Validate buffers are the same length.
-                // This also ensures that the count does not exceed the length of either buffer.  
+                // This also ensures that the count does not exceed the length of either buffer.
+#if NETCOREAPP3_1
                 case byte[] bytesA when itemB is byte[] bytesB
-                                        && (bytesA.Length == bytesB.Length && NativeMethods.memcmp(bytesA, bytesB, bytesA.Length) == 0) == false:
+                                        && (bytesA.Length == bytesB.Length && SequenceEqual(bytesA, bytesB)) == false:
+#else
+                // Slow but we want to avoid P/Invoke/unsafe
+                case byte[] bytesA when itemB is byte[] bytesB
+                                        && (bytesA.Length == bytesB.Length && bytesA.SequenceEqual(bytesB)) == false:
+#endif
                     return false;
                 case IEnumerable enumerableA when itemB is IEnumerable enumerableB:
                     {
@@ -198,11 +198,11 @@ namespace Startitecture.Core
         /// <c>true</c> if the specified properties of the values are equal; otherwise, <c>false</c>.
         /// </returns>
         /// <remarks>
-        /// This method uses <see cref="EqualityComparer{T}"/> when no selectors have been specified. 
-        /// Calling this method from within an implementation of <see cref="IEquatable{T}"/> on an object of the same type 
-        /// without specifying selectors will result in a recursive loop as <see cref="EqualityComparer{T}"/> 
-        /// calls <see cref="System.IEquatable{T}.Equals(T)"/>. The same issue applies if the calling type is not 
-        /// <see cref="System.IEquatable{T}.Equals(T)"/>.
+        /// This method uses <see cref="EqualityComparer{T}"/> when no selectors have been specified.
+        /// Calling this method from within an implementation of <see cref="IEquatable{T}"/> on an object of the same type
+        /// without specifying selectors will result in a recursive loop as <see cref="EqualityComparer{T}"/>
+        /// calls <see cref="IEquatable{T}.Equals(T)"/>. The same issue applies if the calling type is not
+        /// <see cref="IEquatable{T}.Equals(T)"/>.
         /// </remarks>
         public static bool Equals<T>(T itemA, T itemB, params Func<T, object>[] selectors)
         {
@@ -226,6 +226,25 @@ namespace Startitecture.Core
                        : EqualityComparer<T>.Default.Equals(itemA, itemB);
         }
 
+#if NETCOREAPP3_1
+        /// <summary>
+        /// Compares two byte arrays for sequence equality.
+        /// </summary>
+        /// <param name="arrayA">
+        /// The first array to compare.
+        /// </param>
+        /// <param name="arrayB">
+        /// The second array to compare.
+        /// </param>
+        /// <returns>
+        /// <c>true</c> if the sequence of bytes in <paramref name="arrayA"/> is equal to that of <paramref name="arrayB"/>; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool SequenceEqual(ReadOnlySpan<byte> arrayA, ReadOnlySpan<byte> arrayB)
+        {
+            return arrayA.SequenceEqual(arrayB);
+        }
+#endif
+
         /// <summary>
         /// Determines whether two values, one of a specified type and one of an unknown type, are the same type.
         /// </summary>
@@ -239,10 +258,10 @@ namespace Startitecture.Core
         /// The second object to compare.
         /// </param>
         /// <returns>
-        /// A signed integer that indicates the relative values of <paramref name="valueA"/> and <paramref name="valueB"/>, as shown in the 
+        /// A signed integer that indicates the relative values of <paramref name="valueA"/> and <paramref name="valueB"/>, as shown in the
         /// following table.
         /// <para>
-        /// Value Meaning 
+        /// Value Meaning:
         /// </para>
         /// <para>
         /// Less than zero <paramref name="valueA"/> is less than <paramref name="valueB"/>.
@@ -276,7 +295,7 @@ namespace Startitecture.Core
         }
 
         /// <summary>
-        /// Performs a comparison of two objects of the same type and returns a value indicating whether one object is less than, 
+        /// Performs a comparison of two objects of the same type and returns a value indicating whether one object is less than,
         /// equal to, or greater than the other.
         /// </summary>
         /// <typeparam name="T">
@@ -292,10 +311,10 @@ namespace Startitecture.Core
         /// The property selectors for the specified object.
         /// </param>
         /// <returns>
-        /// A signed integer that indicates the relative values of <paramref name="valueA"/> and <paramref name="valueB"/>, as shown in the 
+        /// A signed integer that indicates the relative values of <paramref name="valueA"/> and <paramref name="valueB"/>, as shown in the
         /// following table.
         /// <para>
-        /// Value Meaning 
+        /// Value Meaning:
         /// </para>
         /// <para>
         /// Less than zero <paramref name="valueA"/> is less than <paramref name="valueB"/>.
@@ -309,9 +328,9 @@ namespace Startitecture.Core
         /// </returns>
         /// <remarks>
         /// This method uses <see cref="Comparer{T}"/> when no selectors have been specified. Calling this
-        /// method from within an implementation of <see cref="IComparable{T}"/> on an object of the same type without 
-        /// specifying selectors will result in a recursive loop as <see cref="Comparer{T}"/> calls 
-        /// <see cref="System.IComparable{T}.CompareTo(T)"/>.
+        /// method from within an implementation of <see cref="IComparable{T}"/> on an object of the same type without
+        /// specifying selectors will result in a recursive loop as <see cref="Comparer{T}"/> calls
+        /// <see cref="IComparable{T}.CompareTo(T)"/>.
         /// </remarks>
         public static int Compare<T>(T valueA, T valueB, params Func<T, object>[] selectors)
         {
@@ -368,7 +387,7 @@ namespace Startitecture.Core
         }
 
         /// <summary>
-        /// Gets the hash code for the specified collection. 
+        /// Gets the hash code for the specified collection.
         /// </summary>
         /// <typeparam name="T">
         /// The type of value contained in the collection.
@@ -402,12 +421,12 @@ namespace Startitecture.Core
         /// <returns>
         /// An integer hash code based on the values selected for the item.
         /// </returns>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         /// <paramref name="selectors"/> is null.
         /// </exception>
         [SuppressMessage(
-            "Microsoft.Design", 
-            "CA1006:DoNotNestGenericTypesInMemberSignatures", 
+            "Microsoft.Design",
+            "CA1006:DoNotNestGenericTypesInMemberSignatures",
             Justification = "Allows passing of Func<T, object> collections which are not difficult to create.")]
         public static int GenerateHashCode<T>(T item, IEnumerable<Func<T, object>> selectors)
         {
@@ -457,8 +476,6 @@ namespace Startitecture.Core
 
             return GenerateHashCode(items);
         }
-
-        #endregion
 
         /// <summary>
         /// Determine whether the list of selectors return equal values for <paramref name="itemA"/> and <paramref name="itemB"/>. If the

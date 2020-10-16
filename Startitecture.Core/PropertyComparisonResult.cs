@@ -1,10 +1,7 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="PropertyComparisonResult.cs" company="Startitecture">
-//   Copyright 2017 Startitecture. All rights reserved.
+//   Copyright (c) Startitecture. All rights reserved.
 // </copyright>
-// <summary>
-//   Contains the result of a property comparison.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace Startitecture.Core
@@ -17,7 +14,7 @@ namespace Startitecture.Core
     /// <summary>
     /// Contains the result of a property comparison.
     /// </summary>
-    public struct PropertyComparisonResult : IEquatable<PropertyComparisonResult>
+    public readonly struct PropertyComparisonResult : IEquatable<PropertyComparisonResult>
     {
         /// <summary>
         /// The to string format.
@@ -51,8 +48,6 @@ namespace Startitecture.Core
             this.NewValue = newValue;
         }
 
-        #region Public Properties
-
         /// <summary>
         /// Gets the property name.
         /// </summary>
@@ -67,8 +62,6 @@ namespace Startitecture.Core
         /// Gets the new value.
         /// </summary>
         public object NewValue { get; }
-
-        #endregion
 
         /// <summary>
         /// Indicates whether two objects of the same type are equal.
@@ -108,9 +101,8 @@ namespace Startitecture.Core
         /// Returns the fully qualified type name of this instance.
         /// </summary>
         /// <returns>
-        /// A <see cref="String"/> containing a fully qualified type name.
+        /// A <see cref="string"/> containing a fully qualified type name.
         /// </returns>
-        /// <filterpriority>2</filterpriority>
         public override string ToString()
         {
             return string.Format(CultureInfo.CurrentCulture, ToStringFormat, this.PropertyName, this.OriginalValue, this.NewValue);
@@ -122,7 +114,9 @@ namespace Startitecture.Core
         /// <returns>
         /// true if <paramref name="obj"/> and this instance are the same type and represent the same value; otherwise, false.
         /// </returns>
-        /// <param name="obj">Another object to compare to. </param><filterpriority>2</filterpriority>
+        /// <param name="obj">
+        /// Another object to compare to.
+        /// </param>
         public override bool Equals(object obj)
         {
             return obj is PropertyComparisonResult result && this.Equals(result);
@@ -146,7 +140,6 @@ namespace Startitecture.Core
         /// <returns>
         /// A 32-bit signed integer that is the hash code for this instance.
         /// </returns>
-        /// <filterpriority>2</filterpriority>
         public override int GetHashCode()
         {
             return Evaluate.GenerateHashCode(this.PropertyName, this.OriginalValue, this.NewValue);

@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="EvaluateTests.cs" company="Startitecture">
-//   Copyright 2017 Startitecture. All rights reserved.
+//   Copyright (c) Startitecture. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -19,7 +19,7 @@ namespace Startitecture.Core.Tests
     public class EvaluateTests
     {
         /// <summary>
-        /// A test for Equals
+        /// A test for Equals.
         /// </summary>
         [TestMethod]
         public void Equals_BothNull_ReturnsTrue()
@@ -31,7 +31,7 @@ namespace Startitecture.Core.Tests
         }
 
         /// <summary>
-        /// A test for Equals
+        /// A test for Equals.
         /// </summary>
         [TestMethod]
         public void Equals_LeftNull_ReturnsFalse()
@@ -42,7 +42,7 @@ namespace Startitecture.Core.Tests
         }
 
         /// <summary>
-        /// A test for Equals
+        /// A test for Equals.
         /// </summary>
         [TestMethod]
         public void Equals_RightNull_ReturnsFalse()
@@ -53,7 +53,7 @@ namespace Startitecture.Core.Tests
         }
 
         /// <summary>
-        /// A test for Equals
+        /// A test for Equals.
         /// </summary>
         [TestMethod]
         public void Equals_LeftNullWithParameters_ReturnsFalse()
@@ -64,7 +64,7 @@ namespace Startitecture.Core.Tests
         }
 
         /// <summary>
-        /// A test for Equals
+        /// A test for Equals.
         /// </summary>
         [TestMethod]
         public void Equals_RightNullWithParameters_ReturnsFalse()
@@ -75,7 +75,7 @@ namespace Startitecture.Core.Tests
         }
 
         /// <summary>
-        /// A test for Equals
+        /// A test for Equals.
         /// </summary>
         [TestMethod]
         public void Equals_TestObjectsWithEqualProperties_ReturnsTrue()
@@ -87,7 +87,7 @@ namespace Startitecture.Core.Tests
         }
 
         /// <summary>
-        /// A test for Equals
+        /// A test for Equals.
         /// </summary>
         [TestMethod]
         public void Equals_TestObjectsWithSpecificEqualProperties_ReturnsTrue()
@@ -159,7 +159,7 @@ namespace Startitecture.Core.Tests
         }
 
         /// <summary>
-        /// A test for GenerateHashCode
+        /// A test for GenerateHashCode.
         /// </summary>
         [TestMethod]
         public void GenerateHashCode_WithObjectEnumerable_MatchesExpected()
@@ -171,7 +171,7 @@ namespace Startitecture.Core.Tests
         }
 
         /// <summary>
-        /// A test for GenerateHashCode
+        /// A test for GenerateHashCode.
         /// </summary>
         [TestMethod]
         public void GenerateHashCode_WithParamsArray_MatchesExpected()
@@ -183,7 +183,7 @@ namespace Startitecture.Core.Tests
         }
 
         /// <summary>
-        /// A test for GenerateHashCode
+        /// A test for GenerateHashCode.
         /// </summary>
         [TestMethod]
         public void GenerateHashCode_WithSelectors_MatchesExpected()
@@ -204,7 +204,7 @@ namespace Startitecture.Core.Tests
         }
 
         /// <summary>
-        /// A test for GetHashCode
+        /// A test for GetHashCode.
         /// </summary>
         [TestMethod]
         public void GetHashCode_NullValue_ReturnsZero()
@@ -215,7 +215,7 @@ namespace Startitecture.Core.Tests
         }
 
         /// <summary>
-        /// A test for GetHashCode
+        /// A test for GetHashCode.
         /// </summary>
         [TestMethod]
         public void GetHashCode_TestObject_ReturnsHashCode()
@@ -227,7 +227,7 @@ namespace Startitecture.Core.Tests
         }
 
         /// <summary>
-        /// A test for IsDefaultValue
+        /// A test for IsDefaultValue.
         /// </summary>
         [TestMethod]
         public void IsDefaultValue_DefaultValueOfObjectType_ReturnsTrue()
@@ -237,7 +237,7 @@ namespace Startitecture.Core.Tests
         }
 
         /// <summary>
-        /// A test for IsDefaultValue
+        /// A test for IsDefaultValue.
         /// </summary>
         [TestMethod]
         public void IsDefaultValue_DefaultValueOfValueType_ReturnsTrue()
@@ -247,7 +247,7 @@ namespace Startitecture.Core.Tests
         }
 
         /// <summary>
-        /// A test for IsDefaultValue
+        /// A test for IsDefaultValue.
         /// </summary>
         [TestMethod]
         public void IsDefaultValue_NonDefaultValueOfObjectType_ReturnsFalse()
@@ -257,7 +257,7 @@ namespace Startitecture.Core.Tests
         }
 
         /// <summary>
-        /// A test for IsDefaultValue
+        /// A test for IsDefaultValue.
         /// </summary>
         [TestMethod]
         public void IsDefaultValue_NonDefaultValueOfValueType_ReturnsFalse()
@@ -267,7 +267,7 @@ namespace Startitecture.Core.Tests
         }
 
         /// <summary>
-        /// A test for IsDefaultValue
+        /// A test for IsDefaultValue.
         /// </summary>
         [TestMethod]
         public void IsDefaultValue_NullValueForNullableType_ReturnsTrue()
@@ -277,7 +277,7 @@ namespace Startitecture.Core.Tests
         }
 
         /// <summary>
-        /// A test for IsNull
+        /// A test for IsNull.
         /// </summary>
         [TestMethod]
         public void IsNull_DefaultValueOfValueType_ReturnsFalse()
@@ -287,7 +287,7 @@ namespace Startitecture.Core.Tests
         }
 
         /// <summary>
-        /// A test for IsDefaultValue
+        /// A test for IsDefaultValue.
         /// </summary>
         [TestMethod]
         public void IsNull_NullValue_ReturnsTrue()
@@ -297,7 +297,7 @@ namespace Startitecture.Core.Tests
         }
 
         /// <summary>
-        /// A test for IsDefaultValue
+        /// A test for IsDefaultValue.
         /// </summary>
         [TestMethod]
         public void IsNull_SetValue_ReturnsFalse()
@@ -308,7 +308,7 @@ namespace Startitecture.Core.Tests
         }
 
         /// <summary>
-        /// A test for IsSet
+        /// A test for IsSet.
         /// </summary>
         [TestMethod]
         public void IsNull_DefaultValueOfNullableType_ReturnsTrue()
@@ -318,7 +318,7 @@ namespace Startitecture.Core.Tests
         }
 
         /// <summary>
-        /// A test for IsSet
+        /// A test for IsSet.
         /// </summary>
         [TestMethod]
         public void IsSet_DefaultValueOfObjectType_ReturnsFalse()
@@ -328,7 +328,7 @@ namespace Startitecture.Core.Tests
         }
 
         /// <summary>
-        /// A test for IsSet
+        /// A test for IsSet.
         /// </summary>
         [TestMethod]
         public void IsSet_DefaultValueOfValueType_ReturnsTrue()
@@ -338,7 +338,7 @@ namespace Startitecture.Core.Tests
         }
 
         /// <summary>
-        /// A test for IsSet
+        /// A test for IsSet.
         /// </summary>
         [TestMethod]
         public void IsSet_NonDefaultValueOfObjectType_ReturnsTrue()
@@ -348,7 +348,7 @@ namespace Startitecture.Core.Tests
         }
 
         /// <summary>
-        /// A test for IsSet
+        /// A test for IsSet.
         /// </summary>
         [TestMethod]
         public void IsSet_NonDefaultValueOfValueType_ReturnsTrue()
@@ -358,7 +358,7 @@ namespace Startitecture.Core.Tests
         }
 
         /// <summary>
-        /// A test for IsSet
+        /// A test for IsSet.
         /// </summary>
         [TestMethod]
         public void IsSet_DefaultValueOfNullableType_ReturnsFalse()

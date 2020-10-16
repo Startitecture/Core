@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="FakeTestItem.cs" company="Startitecture">
-//   Copyright 2017 Startitecture. All rights reserved.
+//   Copyright (c) Startitecture. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -49,11 +49,9 @@ namespace Startitecture.Core.Tests
         public DateTime TestDateTime { get; set; }
 
         /// <summary>
-        /// The test list.
+        /// Gets the test list.
         /// </summary>
         public IEnumerable<string> TestList => this.testList;
-
-        #region Equality and Comparison Methods and Operators
 
         /// <summary>
         /// Determines if two values of the same type are equal.
@@ -95,7 +93,6 @@ namespace Startitecture.Core.Tests
         /// <returns>
         /// A string that represents the current object.
         /// </returns>
-        /// <filterpriority>2</filterpriority>
         public override string ToString()
         {
             return $"{this.TestInt}:{this.TestString}:{this.TestDateTime}:{string.Join(";", this.testList)}";
@@ -107,7 +104,6 @@ namespace Startitecture.Core.Tests
         /// <returns>
         /// A hash code for the current object.
         /// </returns>
-        /// <filterpriority>2</filterpriority>
         public override int GetHashCode()
         {
             return Evaluate.GenerateHashCode(this, ComparisonProperties);
@@ -120,9 +116,8 @@ namespace Startitecture.Core.Tests
         /// true if the specified object  is equal to the current object; otherwise, false.
         /// </returns>
         /// <param name="obj">
-        /// The object to compare with the current object. 
+        /// The object to compare with the current object.
         /// </param>
-        /// <filterpriority>2</filterpriority>
         public override bool Equals(object obj)
         {
             return Evaluate.Equals(this, obj);
@@ -141,8 +136,6 @@ namespace Startitecture.Core.Tests
         {
             return Evaluate.Equals(this, other, ComparisonProperties);
         }
-
-        #endregion
 
         /// <summary>
         /// Adds an item to the list.

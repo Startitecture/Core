@@ -1,11 +1,11 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DoNotLogAttribute.cs" company="Startitecture">
-//   Copyright 2017 Startitecture. All rights reserved.
+//   Copyright (c) Startitecture. All rights reserved.
 // </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 // <summary>
 //   An attribute class to indicate that a specified property should not be logged into a persistent store.
 // </summary>
-// --------------------------------------------------------------------------------------------------------------------
 
 namespace Startitecture.Core
 {

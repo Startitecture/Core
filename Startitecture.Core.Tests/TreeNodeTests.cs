@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="TreeNodeTests.cs" company="Startitecture">
-//   Copyright 2017 Startitecture. All rights reserved.
+//   Copyright (c) Startitecture. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 namespace Startitecture.Core.Tests
@@ -274,7 +274,7 @@ namespace Startitecture.Core.Tests
             var node14 = node5Children.Skip(1).First().AddChildren(14).First();
             node14.AddChildren(15, 17);
 
-            var expected  = new List<int> { 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17 };
+            var expected = new List<int> { 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17 };
             var actual = rootNode.Flatten().ToList();
             CollectionAssert.AreEquivalent(expected, actual);
         }

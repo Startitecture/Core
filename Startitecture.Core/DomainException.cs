@@ -1,10 +1,7 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DomainException.cs" company="Startitecture">
-//   Copyright 2017 Startitecture. All rights reserved.
+//   Copyright (c) Startitecture. All rights reserved.
 // </copyright>
-// <summary>
-//   Provides a base exception for all explicitly-thrown framework exceptions.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace Startitecture.Core
@@ -13,13 +10,13 @@ namespace Startitecture.Core
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Provides a base exception for all explicitly-thrown framework exceptions. 
+    /// Provides a base exception for all explicitly-thrown framework exceptions.
     /// </summary>
     [Serializable]
     public class DomainException : Exception
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="DomainException"/> class. 
+        /// Initializes a new instance of the <see cref="DomainException"/> class.
         /// </summary>
         public DomainException()
         {
@@ -37,7 +34,7 @@ namespace Startitecture.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DomainException"/> class with a message describing the exception and the 
+        /// Initializes a new instance of the <see cref="DomainException"/> class with a message describing the exception and the
         /// underlying exception.
         /// </summary>
         /// <param name="message">
@@ -56,7 +53,7 @@ namespace Startitecture.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DomainException"/> class. 
+        /// Initializes a new instance of the <see cref="DomainException"/> class.
         /// </summary>
         /// <param name="info">
         /// The System.Runtime.Serialization.SerializationInfo that holds the serialized object data about the exception being thrown.
@@ -64,11 +61,11 @@ namespace Startitecture.Core
         /// <param name="context">
         /// The System.Runtime.Serialization.StreamingContext that contains contextual information about the source or destination.
         /// </param>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         /// The info parameter is null.
         /// </exception>
-        /// <exception cref="System.Runtime.Serialization.SerializationException">
-        /// The class name is null or 
+        /// <exception cref="SerializationException">
+        /// The class name is null or
         /// System.Exception.HResult is zero (0).
         /// </exception>
         protected DomainException(SerializationInfo info, StreamingContext context)
@@ -82,19 +79,18 @@ namespace Startitecture.Core
         public Guid CorrelationId { get; set; }
 
         /// <summary>
-        /// When overridden in a derived class, sets the <see cref="SerializationInfo"/> with 
+        /// When overridden in a derived class, sets the <see cref="SerializationInfo"/> with
         /// information about the exception.
         /// </summary>
         /// <param name="info">
-        /// The <see cref="SerializationInfo"/> that holds the serialized object data about the 
-        /// exception being thrown. 
+        /// The <see cref="SerializationInfo"/> that holds the serialized object data about the
+        /// exception being thrown.
         /// </param>
         /// <param name="context">
         /// The <see cref="StreamingContext"/> that contains contextual information about the source or
         /// destination. </param>
         /// <exception cref="ArgumentNullException">
         /// The <paramref name="info"/> parameter is a null reference (Nothing in Visual Basic). </exception>
-        /// <filterpriority>2</filterpriority>
         /// <PermissionSet>
         /// <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Read="*AllFiles*" PathDiscovery="*AllFiles*"/>
         /// <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="SerializationFormatter"/>

@@ -1,10 +1,7 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="ExtensionMethods.cs" company="Startitecture">
-//   Copyright 2017 Startitecture. All rights reserved.
+//   Copyright (c) Startitecture. All rights reserved.
 // </copyright>
-// <summary>
-//   Contains methods that extend existing classes.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace Startitecture.Core
@@ -16,8 +13,6 @@ namespace Startitecture.Core
     using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
-    using System.Runtime.Caching;
-
     using Startitecture.Resources;
 
     /// <summary>
@@ -54,10 +49,10 @@ namespace Startitecture.Core
         /// <param name="entity">
         /// The entity to retrieve the value from.
         /// </param>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         /// <paramref name="propertyInfo"/> or <paramref name="entity"/> is null.
         /// </exception>
-        /// <exception cref="System.NotSupportedException">
+        /// <exception cref="NotSupportedException">
         /// <paramref name="propertyInfo"/> is an indexed property.
         /// </exception>
         /// <returns>
@@ -84,7 +79,7 @@ namespace Startitecture.Core
         }
 
         /// <summary>
-        /// Populates the current dictionary with the properties of the item. The property values are converted to strings if they do 
+        /// Populates the current dictionary with the properties of the item. The property values are converted to strings if they do
         /// not implement the <see cref="System.Runtime.Serialization.ISerializable"/> interface.
         /// </summary>
         /// <param name="dictionary">
@@ -93,7 +88,7 @@ namespace Startitecture.Core
         /// <param name="item">
         /// The item with the properties to insert into the dictionary.
         /// </param>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         /// <paramref name="dictionary"/> is null.
         /// </exception>
         public static void PopulateDictionary(this IDictionary dictionary, object item)
@@ -126,7 +121,7 @@ namespace Startitecture.Core
         /// <returns>
         /// The property name as a <see cref="string"/>.
         /// </returns>
-        /// <exception cref="System.ArgumentException">
+        /// <exception cref="ArgumentException">
         /// The expression cannot be evaluated for a member name, or the member is not a property.
         /// </exception>
         public static PropertyInfo GetProperty(this LambdaExpression selector)
@@ -193,7 +188,7 @@ namespace Startitecture.Core
         /// The expression to evaluate.
         /// </param>
         /// <returns>
-        /// The <see cref="System.Linq.Expressions.MemberExpression"/> in the body of the expression.
+        /// The <see cref="MemberExpression"/> in the body of the expression.
         /// </returns>
         /// <exception cref="OperationException">
         /// The expression cannot be evaluated as a property.
@@ -234,7 +229,7 @@ namespace Startitecture.Core
         /// <returns>
         /// The property name as a <see cref="string"/>.
         /// </returns>
-        /// <exception cref="System.ArgumentException">
+        /// <exception cref="ArgumentException">
         /// The expression cannot be evaluated for a member name.
         /// </exception>
         public static string GetPropertyName(this LambdaExpression selector)
@@ -262,10 +257,10 @@ namespace Startitecture.Core
         /// <returns>
         /// The <see cref="object"/>.
         /// </returns>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         /// <paramref name="propertyName"/> or <paramref name="entity"/> is null.
         /// </exception>
-        /// <exception cref="System.ArgumentException">
+        /// <exception cref="ArgumentException">
         /// <paramref name="propertyName"/> specifies a property that does not exist in <typeparamref name="T"/>.
         /// </exception>
         public static object GetPropertyValue<T>(this T entity, string propertyName)
@@ -293,188 +288,6 @@ namespace Startitecture.Core
         }
 
         /// <summary>
-        /// Gets a value from the cache or lazily adds an existing value.
-        /// </summary>
-        /// <param name="cache">
-        /// The cache to retrieve or store the value in.
-        /// </param>
-        /// <param name="synchronizationLock">
-        /// The synchronization lock for the cache.
-        /// </param>
-        /// <param name="cacheKey">
-        /// The cache key.
-        /// </param>
-        /// <param name="retrievalKey">
-        /// The retrieval key.
-        /// </param>
-        /// <param name="getValue">
-        /// A function that retrieves the value from the real store.
-        /// </param>
-        /// <param name="policy">
-        /// The policy to apply.
-        /// </param>
-        /// <typeparam name="TKey">
-        /// The type of key that retrieves the value.
-        /// </typeparam>
-        /// <typeparam name="TValue">
-        /// The type of value stored in the cache.
-        /// </typeparam>
-        /// <returns>
-        /// A <typeparamref name="TValue"/> instance, either from the cache or from the retrieval function <paramref name="getValue"/>.
-        /// </returns>
-        [Obsolete("Use lazy initialization and ObjectCache.AddOrGetExisting")]
-        public static TValue GetOrLazyAddExisting<TKey, TValue>(
-            this ObjectCache cache,
-            object synchronizationLock,
-            string cacheKey,
-            TKey retrievalKey,
-            Func<TKey, TValue> getValue,
-            CacheItemPolicy policy)
-        {
-            if (cache == null)
-            {
-                throw new ArgumentNullException(nameof(cache));
-            }
-
-            if (synchronizationLock == null)
-            {
-                throw new ArgumentNullException(nameof(synchronizationLock));
-            }
-
-            if (cacheKey == null)
-            {
-                throw new ArgumentNullException(nameof(cacheKey));
-            }
-
-            if (getValue == null)
-            {
-                throw new ArgumentNullException(nameof(getValue));
-            }
-
-            if (policy == null)
-            {
-                throw new ArgumentNullException(nameof(policy));
-            }
-
-            var value = cache.Get(cacheKey);
-
-            if (value is TValue optimisticValue)
-            {
-                return optimisticValue;
-            }
-
-            lock (synchronizationLock)
-            {
-                value = cache.Get(cacheKey);
-
-                if (value is TValue cachedValue)
-                {
-                    return cachedValue;
-                }
-
-                var retrievedValue = getValue(retrievalKey);
-
-                if (Evaluate.IsNull(retrievedValue) == false)
-                {
-                    cache.Set(cacheKey, retrievedValue, policy);
-                }
-
-                return retrievedValue;
-            }
-        }
-
-        /// <summary>
-        /// Gets a value from the cache or lazily adds an existing value.
-        /// </summary>
-        /// <param name="cache">
-        /// The cache to retrieve or store the value in.
-        /// </param>
-        /// <param name="synchronizationLock">
-        /// The synchronization lock for the cache.
-        /// </param>
-        /// <param name="cacheKey">
-        /// The cache key.
-        /// </param>
-        /// <param name="retrievalKey">
-        /// The retrieval key.
-        /// </param>
-        /// <param name="getValue">
-        /// A function that retrieves the value from the real store.
-        /// </param>
-        /// <param name="policy">
-        /// The policy to apply.
-        /// </param>
-        /// <typeparam name="TKey">
-        /// The type of key that retrieves the value.
-        /// </typeparam>
-        /// <typeparam name="TValue">
-        /// The type of value stored in the cache.
-        /// </typeparam>
-        /// <returns>
-        /// A <typeparamref name="TValue"/> instance, either from the cache or from the retrieval function <paramref name="getValue"/>.
-        /// </returns>
-        [Obsolete("Use lazy initialization and ObjectCache.AddOrGetExisting")]
-        public static CacheResult<TValue> GetOrLazyAddExistingWithResult<TKey, TValue>(
-            this ObjectCache cache,
-            object synchronizationLock,
-            string cacheKey,
-            TKey retrievalKey,
-            Func<TKey, TValue> getValue,
-            CacheItemPolicy policy)
-        {
-            if (cache == null)
-            {
-                throw new ArgumentNullException(nameof(cache));
-            }
-
-            if (synchronizationLock == null)
-            {
-                throw new ArgumentNullException(nameof(synchronizationLock));
-            }
-
-            if (cacheKey == null)
-            {
-                throw new ArgumentNullException(nameof(cacheKey));
-            }
-
-            if (getValue == null)
-            {
-                throw new ArgumentNullException(nameof(getValue));
-            }
-
-            if (policy == null)
-            {
-                throw new ArgumentNullException(nameof(policy));
-            }
-
-            var value = cache.Get(cacheKey);
-
-            if (value is TValue optimisticValue)
-            {
-                return new CacheResult<TValue>(optimisticValue, true, cacheKey);
-            }
-
-            lock (synchronizationLock)
-            {
-                value = cache.Get(cacheKey);
-
-                if (value is TValue lockedValue)
-                {
-                    return new CacheResult<TValue>(lockedValue, true, cacheKey);
-                }
-
-                var retrievedValue = getValue(retrievalKey);
-
-                if (Evaluate.IsNull(retrievedValue) == false)
-                {
-                    cache.Set(cacheKey, retrievedValue, policy);
-                }
-
-                return new CacheResult<TValue>(retrievedValue, false, cacheKey);
-            }
-        }
-
-        /// <summary>
         /// Gets the property differences between two objects of the same type.
         /// </summary>
         /// <param name="baseline">
@@ -490,7 +303,7 @@ namespace Startitecture.Core
         /// The type of item to compare.
         /// </typeparam>
         /// <returns>
-        /// A collection of <see cref="Startitecture.Core.PropertyComparisonResult"/> items containing the non-equivalent property values of the two 
+        /// A collection of <see cref="PropertyComparisonResult"/> items containing the non-equivalent property values of the two
         /// items.
         /// </returns>
         public static IEnumerable<PropertyComparisonResult> GetDifferences<TItem>(
@@ -611,7 +424,7 @@ namespace Startitecture.Core
         }
 
         /// <summary>
-        /// Gets property names and values for the specified item, replacing any non-serializable items with their string 
+        /// Gets property names and values for the specified item, replacing any non-serializable items with their string
         /// representations.
         /// </summary>
         /// <param name="item">

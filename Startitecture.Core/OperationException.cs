@@ -26,7 +26,7 @@ namespace Startitecture.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OperationException"/> class with a message describing 
+        /// Initializes a new instance of the <see cref="OperationException"/> class with a message describing
         /// the exception.
         /// </summary>
         /// <param name="message">
@@ -38,7 +38,7 @@ namespace Startitecture.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OperationException"/> class with a message describing 
+        /// Initializes a new instance of the <see cref="OperationException"/> class with a message describing
         /// the exception and the underlying exception that caused the <see cref="OperationException"/>.
         /// </summary>
         /// <param name="message">
@@ -53,7 +53,7 @@ namespace Startitecture.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OperationException"/> class with the business object 
+        /// Initializes a new instance of the <see cref="OperationException"/> class with the business object
         /// associated with the exception.
         /// </summary>
         /// <param name="targetEntity">The business object associated with the exception.</param>
@@ -63,7 +63,7 @@ namespace Startitecture.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OperationException"/> class with the business object 
+        /// Initializes a new instance of the <see cref="OperationException"/> class with the business object
         /// associated with the exception and a message describing the exception.
         /// </summary>
         /// <param name="targetEntity">
@@ -78,8 +78,8 @@ namespace Startitecture.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OperationException"/> class with the business object 
-        /// associated with the exception, a message describing the exception and the underlying exception that caused 
+        /// Initializes a new instance of the <see cref="OperationException"/> class with the business object
+        /// associated with the exception, a message describing the exception and the underlying exception that caused
         /// the <see cref="OperationException"/>.
         /// </summary>
         /// <param name="targetEntity">
@@ -102,14 +102,14 @@ namespace Startitecture.Core
         /// Initializes a new instance of the <see cref="OperationException"/> class.
         /// </summary>
         /// <param name="info">
-        /// The System.Runtime.Serialization.SerializationInfo that holds the serialized object 
+        /// The System.Runtime.Serialization.SerializationInfo that holds the serialized object
         /// data about the exception being thrown.
         /// </param>
         /// <param name="context">
-        /// The System.Runtime.Serialization.StreamingContext that contains contextual 
+        /// The System.Runtime.Serialization.StreamingContext that contains contextual
         /// information about the source or destination.
         /// </param>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         /// The info parameter is null.
         /// </exception>
         /// <exception cref="System.Runtime.Serialization.SerializationException">
@@ -131,19 +131,19 @@ namespace Startitecture.Core
         /// Adds directive information to the exception.
         /// </summary>
         /// <param name="info">
-        /// The System.Runtime.Serialization.SerializationInfo that holds the serialized object 
+        /// The System.Runtime.Serialization.SerializationInfo that holds the serialized object
         /// data about the exception being thrown.
         /// </param>
         /// <param name="context">
-        /// The System.Runtime.Serialization.StreamingContext that contains contextual 
+        /// The System.Runtime.Serialization.StreamingContext that contains contextual
         /// information about the source or destination.
         /// </param>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         /// The info parameter is null.
         /// </exception>
         [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
         public override void GetObjectData(
-            System.Runtime.Serialization.SerializationInfo info, 
+            System.Runtime.Serialization.SerializationInfo info,
             System.Runtime.Serialization.StreamingContext context)
         {
             base.GetObjectData(info, context);
